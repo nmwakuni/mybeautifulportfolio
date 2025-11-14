@@ -20,6 +20,7 @@ export default function Contact() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const {
     register,
@@ -31,12 +32,30 @@ export default function Contact() {
   });
 
   const onSubmit = async (data: FormData) => {
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    console.log('Form data:', data);
-    setIsSubmitted(true);
-    reset();
-    setTimeout(() => setIsSubmitted(false), 5000);
+    try {
+      setError(null);
+
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Failed to send message');
+      }
+
+      setIsSubmitted(true);
+      reset();
+      setTimeout(() => setIsSubmitted(false), 5000);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Something went wrong');
+      console.error('Error sending message:', err);
+    }
   };
 
   return (
@@ -199,6 +218,16 @@ export default function Contact() {
                     <p className="mt-1 text-sm text-red-500">{errors.message.message}</p>
                   )}
                 </div>
+
+                {error && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="p-4 bg-red-50 border border-red-200 rounded-xl"
+                  >
+                    <p className="text-sm text-red-600">{error}</p>
+                  </motion.div>
+                )}
 
                 <motion.button
                   type="submit"

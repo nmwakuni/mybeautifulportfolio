@@ -9,7 +9,8 @@ A stunning portfolio website built with Next.js, TypeScript, and Framer Motion, 
 - **Projects Showcase**: Beautiful project cards with hover effects and transitions
 - **About Section**: Scroll-triggered animations highlighting skills and statistics
 - **Blog**: Full blog system with listing page and article pages
-- **Contact Form**: Validated contact form using React Hook Form and Zod
+- **Contact Form**: Validated contact form with real email sending via Resend
+- **Email Integration**: Beautiful HTML email templates for contact form submissions
 - **Responsive Design**: Fully responsive across all devices and screen sizes
 - **Modern UI**: Clean, minimalist design with purple/blue gradient color scheme
 - **Dark Mode Support**: Automatic dark mode based on system preferences
@@ -23,6 +24,7 @@ A stunning portfolio website built with Next.js, TypeScript, and Framer Motion, 
 - **Framer Motion** - Production-ready animation library
 - **React Hook Form** - Performant form validation
 - **Zod** - TypeScript-first schema validation
+- **Resend** - Modern email API for contact form
 - **Lucide React** - Beautiful, consistent icons
 
 ## Getting Started
@@ -47,6 +49,40 @@ Open [http://localhost:3000](http://localhost:3000) in your browser to see the p
 npm run build
 npm start
 ```
+
+### Email Setup (Resend)
+
+The contact form uses [Resend](https://resend.com) for sending emails. Follow these steps to set it up:
+
+1. **Create a Resend account** at [resend.com](https://resend.com)
+
+2. **Get your API key** from the [API Keys page](https://resend.com/api-keys)
+
+3. **Configure environment variables**:
+   - Copy `.env.example` to `.env.local`
+   - Add your Resend API key
+   - Set your contact email (where you want to receive messages)
+
+```bash
+# .env.local
+RESEND_API_KEY=re_your_api_key_here
+CONTACT_EMAIL=your@email.com
+RESEND_FROM_EMAIL=Contact Form <onboarding@resend.dev>
+```
+
+4. **For production with custom domain** (optional):
+   - Add and verify your domain in Resend
+   - Update `RESEND_FROM_EMAIL` to use your domain:
+   ```
+   RESEND_FROM_EMAIL=Contact Form <contact@yourdomain.com>
+   ```
+
+5. **Test the form**:
+   - Run `npm run dev`
+   - Fill out the contact form
+   - Check your email inbox
+
+The contact form will now send beautifully formatted emails whenever someone submits the form!
 
 ## Customization Guide
 
@@ -118,22 +154,29 @@ Customize colors in `app/globals.css`:
 }
 ```
 
-### 6. Contact Form
+### 6. Contact Form & Email
 
-Update the contact form submission in `components/sections/Contact.tsx`:
+The contact form is already set up with Resend! Just configure your environment variables (see Email Setup section above). You can customize:
 
-- Replace the simulated API call with your actual endpoint
-- Update email address for the mailto link
+- **Email template**: `components/emails/ContactEmailTemplate.tsx`
+  - Modify the design and layout of emails you receive
+- **Email recipient**: Set `CONTACT_EMAIL` in `.env.local`
+- **From address**: Set `RESEND_FROM_EMAIL` in `.env.local`
+- **Form fields**: Add/remove fields in `components/sections/Contact.tsx`
 
 ## Project Structure
 
 ```
 ├── app/
+│   ├── api/
+│   │   └── contact/    # Contact form API endpoint
 │   ├── blog/           # Blog pages
 │   ├── globals.css     # Global styles and CSS variables
 │   ├── layout.tsx      # Root layout with metadata
 │   └── page.tsx        # Home page
 ├── components/
+│   ├── emails/         # Email templates
+│   │   └── ContactEmailTemplate.tsx
 │   ├── sections/       # Page sections
 │   │   ├── Hero.tsx
 │   │   ├── Projects.tsx
@@ -143,7 +186,9 @@ Update the contact form submission in `components/sections/Contact.tsx`:
 │   └── ui/             # Reusable UI components
 │       ├── Navigation.tsx
 │       └── Footer.tsx
-└── public/             # Static assets
+├── public/             # Static assets
+├── .env.example        # Environment variables template
+└── .env.local          # Your local environment variables (not committed)
 ```
 
 ## Deployment
@@ -154,7 +199,13 @@ The easiest way to deploy is using [Vercel](https://vercel.com):
 
 1. Push your code to GitHub
 2. Import your repository in Vercel
-3. Deploy with one click
+3. Add environment variables in Vercel project settings:
+   - `RESEND_API_KEY`
+   - `CONTACT_EMAIL`
+   - `RESEND_FROM_EMAIL`
+4. Deploy with one click
+
+**Note**: Don't forget to set up your environment variables in your deployment platform for the contact form to work!
 
 ### Other Platforms
 
