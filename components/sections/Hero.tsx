@@ -4,6 +4,8 @@ import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
 import { ArrowRight, Github, Linkedin, Mail, Code2, Palette, Sparkles, Zap, Layers, Terminal } from 'lucide-react';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import TextReveal from '@/components/ui/TextReveal';
+import MagneticButton from '@/components/ui/MagneticButton';
 
 export default function Hero() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -249,24 +251,18 @@ export default function Hero() {
           variants={itemVariants}
           className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12"
         >
-          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-            <Link
-              href="#projects"
-              className="group px-8 py-4 bg-gradient-to-r from-primary to-secondary text-white rounded-full font-medium flex items-center gap-2 shadow-lg shadow-primary/50 hover:shadow-2xl hover:shadow-primary/60 transition-all duration-300"
-            >
+          <MagneticButton className="group px-8 py-4 bg-gradient-to-r from-primary to-secondary text-white rounded-full font-medium flex items-center gap-2 shadow-lg shadow-primary/50 hover:shadow-2xl hover:shadow-primary/60 transition-all duration-300">
+            <Link href="#projects" className="flex items-center gap-2">
               <Layers size={20} />
               View My Work
               <ArrowRight className="group-hover:translate-x-1 transition-transform" size={20} />
             </Link>
-          </motion.div>
-          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-            <Link
-              href="#contact"
-              className="px-8 py-4 border-2 border-primary text-primary rounded-full font-medium hover:bg-primary hover:text-white transition-all duration-300 backdrop-blur-sm"
-            >
+          </MagneticButton>
+          <MagneticButton className="px-8 py-4 border-2 border-primary text-primary rounded-full font-medium hover:bg-primary hover:text-white transition-all duration-300 backdrop-blur-sm">
+            <Link href="#contact">
               Get in Touch
             </Link>
-          </motion.div>
+          </MagneticButton>
         </motion.div>
 
         <motion.div
