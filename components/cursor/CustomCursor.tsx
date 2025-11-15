@@ -90,7 +90,7 @@ export default function CustomCursor() {
           opacity: { duration: 0.2 },
         }}
       >
-        <div className={`w-full h-full rounded-full border-2 transition-colors duration-300 ${isDark ? 'border-white' : 'border-black'}`} />
+        <div className="w-full h-full rounded-full border-2 border-white" />
       </motion.div>
 
       {/* Dot cursor */}
