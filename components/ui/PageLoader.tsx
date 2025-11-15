@@ -66,13 +66,20 @@ export default function PageLoader() {
             </motion.div>
 
             {/* Animated particles */}
-            {[...Array(6)].map((_, i) => (
+            {[
+              { top: 20, left: 15 },
+              { top: 80, left: 25 },
+              { top: 40, left: 85 },
+              { top: 60, left: 70 },
+              { top: 30, left: 50 },
+              { top: 75, left: 60 },
+            ].map((pos, i) => (
               <motion.div
                 key={i}
                 className="absolute w-2 h-2 bg-primary rounded-full"
                 style={{
-                  top: `${Math.random() * 100}%`,
-                  left: `${Math.random() * 100}%`,
+                  top: `${pos.top}%`,
+                  left: `${pos.left}%`,
                 }}
                 animate={{
                   scale: [0, 1.5, 0],
