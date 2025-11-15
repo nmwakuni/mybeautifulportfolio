@@ -18,11 +18,8 @@ export default function ThemeToggle() {
     setTheme(initialTheme);
 
     // Apply theme to document
-    if (initialTheme === 'dark') {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
+    document.documentElement.classList.remove('dark', 'light');
+    document.documentElement.classList.add(initialTheme);
   }, []);
 
   const toggleTheme = () => {
@@ -31,11 +28,8 @@ export default function ThemeToggle() {
     localStorage.setItem('theme', newTheme);
 
     // Apply theme to document
-    if (newTheme === 'dark') {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
+    document.documentElement.classList.remove('dark', 'light');
+    document.documentElement.classList.add(newTheme);
   };
 
   // Prevent rendering until mounted to avoid hydration mismatch

@@ -28,23 +28,26 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased cursor-none md:cursor-none`}
+      >
         <script
           dangerouslySetInnerHTML={{
             __html: `
               (function() {
                 try {
                   const theme = localStorage.getItem('theme') || 'dark';
-                  document.documentElement.classList.toggle('dark', theme === 'dark');
+                  document.documentElement.classList.remove('dark', 'light');
+                  if (theme === 'light') {
+                    document.documentElement.classList.add('light');
+                  } else {
+                    document.documentElement.classList.add('dark');
+                  }
                 } catch (e) {}
               })();
             `,
           }}
         />
-      </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased cursor-none md:cursor-none`}
-      >
         <PageLoader />
         <CustomCursor />
         <ScrollProgress />
