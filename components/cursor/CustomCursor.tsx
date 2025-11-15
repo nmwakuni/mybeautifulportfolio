@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 export default function CustomCursor() {
   const [isPointer, setIsPointer] = useState(false);
   const [isHidden, setIsHidden] = useState(false);
+  const [isDark, setIsDark] = useState(true);
 
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
@@ -15,6 +16,25 @@ export default function CustomCursor() {
   const cursorYSpring = useSpring(cursorY, springConfig);
 
   useEffect(() => {
+    // Check initial theme
+    const checkTheme = () => {
+      const theme = localStorage.getItem('theme') || 'dark';
+      setIsDark(theme === 'dark');
+    };
+
+    checkTheme();
+
+    // Watch for theme changes
+    const observer = new MutationObserver(() => {
+      const theme = localStorage.getItem('theme') || 'dark';
+      setIsDark(theme === 'dark');
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class'],
+    });
+
     const moveCursor = (e: MouseEvent) => {
       cursorX.set(e.clientX - 16);
       cursorY.set(e.clientY - 16);
@@ -44,6 +64,7 @@ export default function CustomCursor() {
     document.addEventListener('mouseleave', handleMouseLeave);
 
     return () => {
+      observer.disconnect();
       window.removeEventListener('mousemove', moveCursor);
       window.removeEventListener('mouseover', handleMouseOver);
       document.removeEventListener('mouseenter', handleMouseEnter);
@@ -69,7 +90,7 @@ export default function CustomCursor() {
           opacity: { duration: 0.2 },
         }}
       >
-        <div className="w-full h-full rounded-full border-2 border-white" />
+        <div className={`w-full h-full rounded-full border-2 transition-colors duration-300 ${isDark ? 'border-white' : 'border-black'}`} />
       </motion.div>
 
       {/* Dot cursor */}
@@ -90,7 +111,7 @@ export default function CustomCursor() {
           opacity: { duration: 0.2 },
         }}
       >
-        <div className="w-full h-full rounded-full bg-white" />
+        <div className={`w-full h-full rounded-full transition-colors duration-300 ${isDark ? 'bg-white' : 'bg-black'}`} />
       </motion.div>
     </>
   );
