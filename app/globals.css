@@ -1,21 +1,8 @@
 @import "tailwindcss";
 
-/* Light mode (default) */
-:root {
-  --background: #ffffff;
-  --foreground: #0a0a0a;
-  --primary: #6366f1;
-  --primary-dark: #4f46e5;
-  --secondary: #8b5cf6;
-  --accent: #06b6d4;
-  --muted: #f1f5f9;
-  --border: #e2e8f0;
-  --card-bg: #ffffff;
-  --card-hover: #f8fafc;
-}
-
-/* Dark mode */
-.dark {
+/* Dark mode (default) */
+:root,
+:root.dark {
   --background: #0a0a0a;
   --foreground: #ffffff;
   --primary: #6366f1;
@@ -26,6 +13,20 @@
   --border: #334155;
   --card-bg: #0f172a;
   --card-hover: #1e293b;
+}
+
+/* Light mode (when dark class is removed) */
+:root.light {
+  --background: #ffffff;
+  --foreground: #0a0a0a;
+  --primary: #6366f1;
+  --primary-dark: #4f46e5;
+  --secondary: #8b5cf6;
+  --accent: #06b6d4;
+  --muted: #f1f5f9;
+  --border: #e2e8f0;
+  --card-bg: #ffffff;
+  --card-hover: #f8fafc;
 }
 
 @theme inline {

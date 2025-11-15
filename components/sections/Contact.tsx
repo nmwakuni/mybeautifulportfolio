@@ -115,16 +115,49 @@ export default function Contact() {
             {/* Decorative element */}
             <motion.div
               className="relative h-64 rounded-2xl bg-gradient-to-br from-primary/20 via-secondary/20 to-accent/20 overflow-hidden"
-              animate={{
-                backgroundPosition: ['0% 0%', '100% 100%'],
-              }}
-              transition={{
-                duration: 20,
-                repeat: Infinity,
-                repeatType: 'reverse',
-              }}
             >
               <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent" />
+
+              {/* Animated floating orbs */}
+              <motion.div
+                className="absolute w-32 h-32 rounded-full bg-gradient-to-br from-primary/40 to-secondary/40 blur-2xl"
+                animate={{
+                  x: [0, 100, 0],
+                  y: [0, 80, 0],
+                  scale: [1, 1.2, 1],
+                }}
+                transition={{
+                  duration: 8,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              />
+              <motion.div
+                className="absolute w-24 h-24 rounded-full bg-gradient-to-br from-accent/40 to-primary/40 blur-2xl"
+                animate={{
+                  x: [200, 50, 200],
+                  y: [100, 20, 100],
+                  scale: [1, 1.3, 1],
+                }}
+                transition={{
+                  duration: 10,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              />
+              <motion.div
+                className="absolute w-40 h-40 rounded-full bg-gradient-to-br from-secondary/30 to-accent/30 blur-3xl"
+                animate={{
+                  x: [100, 20, 100],
+                  y: [50, 150, 50],
+                  scale: [1.2, 1, 1.2],
+                }}
+                transition={{
+                  duration: 12,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              />
             </motion.div>
           </motion.div>
 
