@@ -4,6 +4,7 @@ import "./globals.css";
 import CustomCursor from "@/components/cursor/CustomCursor";
 import ScrollProgress from "@/components/ui/ScrollProgress";
 import PageLoader from "@/components/ui/PageLoader";
+import ThemeToggle from "@/components/ui/ThemeToggle";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,6 +34,7 @@ export default function RootLayout({
         <PageLoader />
         <CustomCursor />
         <ScrollProgress />
+        <ThemeToggle />
         {children}
       </body>
     </html>
