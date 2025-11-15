@@ -281,7 +281,7 @@ export default function Hero() {
 
         <motion.div
           variants={itemVariants}
-          className="flex items-center justify-center gap-4"
+          className="flex items-center justify-center gap-4 mb-16"
         >
           {[
             { Icon: Github, href: 'https://github.com', label: 'GitHub' },
