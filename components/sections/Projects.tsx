@@ -120,7 +120,7 @@ function ProjectCard({
   const scale = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0.8, 1, 1, 0.8]);
 
   // Alternate left/right layout
-  const isEven = index % 2 === 0;
+  const imageOnLeft = index % 2 === 0;
 
   return (
     <motion.div
@@ -128,11 +128,11 @@ function ProjectCard({
       style={{ opacity, scale }}
       className="relative"
     >
-      <div className={`grid md:grid-cols-2 gap-8 items-center ${isEven ? '' : 'md:grid-flow-dense'}`}>
+      <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
         {/* Image Section */}
         <motion.div
-          className={`relative group ${isEven ? 'md:col-start-1' : 'md:col-start-2'}`}
-          initial={{ opacity: 0, x: isEven ? -100 : 100 }}
+          className={`relative group ${imageOnLeft ? 'md:order-1' : 'md:order-2'}`}
+          initial={{ opacity: 0, x: imageOnLeft ? -100 : 100 }}
           animate={isInView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.8, delay: index * 0.2 }}
         >
@@ -197,8 +197,8 @@ function ProjectCard({
 
         {/* Content Section */}
         <motion.div
-          className={`space-y-6 ${isEven ? 'md:col-start-2' : 'md:col-start-1'}`}
-          initial={{ opacity: 0, x: isEven ? 100 : -100 }}
+          className={`space-y-6 ${imageOnLeft ? 'md:order-2' : 'md:order-1'}`}
+          initial={{ opacity: 0, x: imageOnLeft ? 100 : -100 }}
           animate={isInView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.8, delay: index * 0.2 + 0.2 }}
         >
