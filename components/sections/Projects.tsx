@@ -1,9 +1,10 @@
 'use client';
 
 import { motion, useInView, useScroll, useTransform } from 'framer-motion';
-import { ExternalLink, Github, Star, ArrowUpRight } from 'lucide-react';
+import { ExternalLink, Github, Star, ArrowUpRight, BookOpen } from 'lucide-react';
 import { useRef } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const projects = [
   {
@@ -14,6 +15,7 @@ const projects = [
     gradient: 'from-blue-500 via-cyan-500 to-blue-600',
     github: 'https://github.com',
     live: 'https://example.com',
+    caseStudy: '/case-study/ecommerce-platform',
     featured: true,
     year: '2024',
     role: 'Full Stack Developer',
@@ -26,6 +28,7 @@ const projects = [
     gradient: 'from-purple-500 via-pink-500 to-purple-600',
     github: 'https://github.com',
     live: 'https://example.com',
+    caseStudy: '/case-study/design-system',
     featured: true,
     year: '2024',
     role: 'Lead Designer',
@@ -38,6 +41,7 @@ const projects = [
     gradient: 'from-orange-500 via-red-500 to-pink-600',
     github: 'https://github.com',
     live: 'https://example.com',
+    caseStudy: '/case-study/ai-analytics',
     featured: false,
     year: '2023',
     role: 'ML Engineer',
@@ -50,6 +54,7 @@ const projects = [
     gradient: 'from-green-500 via-emerald-500 to-teal-600',
     github: 'https://github.com',
     live: 'https://example.com',
+    caseStudy: '/case-study/mobile-app',
     featured: false,
     year: '2023',
     role: 'Mobile Developer',
@@ -235,17 +240,32 @@ function ProjectCard({
             ))}
           </div>
 
-          {/* CTA */}
-          <motion.a
-            href={project.live}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-primary font-semibold text-lg group cursor-pointer"
-            whileHover={{ x: 5 }}
-          >
-            View Project
-            <ArrowUpRight className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" size={20} />
-          </motion.a>
+          {/* CTA Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 pt-4">
+            <Link href={project.caseStudy}>
+              <motion.div
+                className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-primary to-secondary text-white rounded-xl font-semibold shadow-lg hover:shadow-2xl hover:shadow-primary/50 transition-all duration-300 cursor-pointer group"
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <BookOpen size={20} />
+                Read Case Study
+                <ArrowUpRight className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" size={18} />
+              </motion.div>
+            </Link>
+            <motion.a
+              href={project.live}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 border-2 border-primary text-primary rounded-xl font-semibold hover:bg-primary hover:text-white transition-all duration-300 cursor-pointer group"
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <ExternalLink size={18} />
+              View Live Project
+              <ArrowUpRight className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" size={18} />
+            </motion.a>
+          </div>
         </motion.div>
       </div>
 
