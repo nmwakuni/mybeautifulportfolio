@@ -9,13 +9,27 @@ import MagneticButton from '@/components/ui/MagneticButton';
 
 export default function Hero() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
 
   useEffect(() => {
+    // Set initial window size
+    setWindowSize({ width: window.innerWidth, height: window.innerHeight });
+
     const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
     };
+
+    const handleResize = () => {
+      setWindowSize({ width: window.innerWidth, height: window.innerHeight });
+    };
+
     window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
   const containerVariants = {
@@ -149,7 +163,7 @@ export default function Hero() {
       })}
 
       {/* Particle effects - small dots that follow mouse */}
-      {[...Array(20)].map((_, i) => (
+      {windowSize.width > 0 && [...Array(20)].map((_, i) => (
         <motion.div
           key={i}
           className="absolute w-2 h-2 bg-gradient-to-r from-primary to-secondary rounded-full opacity-30"
@@ -158,8 +172,8 @@ export default function Hero() {
             top: `${Math.random() * 100}%`,
           }}
           animate={{
-            x: (mousePosition.x - window.innerWidth / 2) / (50 + i * 5),
-            y: (mousePosition.y - window.innerHeight / 2) / (50 + i * 5),
+            x: (mousePosition.x - windowSize.width / 2) / (50 + i * 5),
+            y: (mousePosition.y - windowSize.height / 2) / (50 + i * 5),
             scale: [1, 1.5, 1],
           }}
           transition={{
