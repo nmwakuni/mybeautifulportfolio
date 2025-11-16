@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { ArrowLeft, Calendar, User, Target, Lightbulb, Code, Rocket, TrendingUp } from 'lucide-react';
 import Link from 'next/link';
+import TerminalCTA from '@/components/ui/TerminalCTA';
 
 export default function CaseStudyPage() {
   return (
@@ -193,26 +194,9 @@ export default function CaseStudyPage() {
         </Section>
 
         {/* CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.9 }}
-          className="mt-16 p-8 rounded-3xl bg-gradient-to-br from-primary/10 via-secondary/10 to-accent/10 border border-primary/20"
-        >
-          <h3 className="text-2xl font-bold mb-4">Interested in working together?</h3>
-          <p className="text-foreground/70 mb-6">
-            Let's create something amazing. I'd love to hear about your project.
-          </p>
-          <Link href="/#contact">
-            <motion.div
-              className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-primary to-secondary text-white rounded-xl font-semibold shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              Get in Touch
-            </motion.div>
-          </Link>
-        </motion.div>
+        <div className="mt-16">
+          <TerminalCTA />
+        </div>
       </div>
     </div>
   );
