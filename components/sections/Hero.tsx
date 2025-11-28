@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
-import { ArrowRight, Github, Linkedin, Mail, Code2, Palette, Sparkles, Zap, Layers, Terminal } from 'lucide-react';
+import { ArrowRight, Github, Linkedin, Mail, Code2, Sparkles, Layers, Terminal } from 'lucide-react';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import TextReveal from '@/components/ui/TextReveal';
@@ -55,23 +55,13 @@ export default function Hero() {
     },
   };
 
-  // Floating icons data
+  // Floating icons data - reduced to 2 terminal-style icons
   const floatingIcons = [
     { Icon: Code2, delay: 0, x: '10%', y: '20%', color: 'from-blue-500 to-cyan-500' },
-    { Icon: Palette, delay: 0.5, x: '85%', y: '15%', color: 'from-purple-500 to-pink-500' },
-    { Icon: Sparkles, delay: 1, x: '15%', y: '70%', color: 'from-yellow-500 to-orange-500' },
-    { Icon: Zap, delay: 1.5, x: '80%', y: '65%', color: 'from-green-500 to-emerald-500' },
-    { Icon: Layers, delay: 2, x: '50%', y: '10%', color: 'from-indigo-500 to-purple-500' },
-    { Icon: Terminal, delay: 2.5, x: '90%', y: '45%', color: 'from-pink-500 to-rose-500' },
+    { Icon: Terminal, delay: 1, x: '85%', y: '25%', color: 'from-pink-500 to-rose-500' },
   ];
 
-  // Geometric shapes data
-  const shapes = [
-    { size: 'w-32 h-32', x: '5%', y: '25%', delay: 0, rotate: 45, color: 'bg-primary/20' },
-    { size: 'w-24 h-24', x: '75%', y: '20%', delay: 0.5, rotate: 30, color: 'bg-secondary/20' },
-    { size: 'w-40 h-40', x: '10%', y: '65%', delay: 1, rotate: 60, color: 'bg-accent/20' },
-    { size: 'w-28 h-28', x: '85%', y: '70%', delay: 1.5, rotate: 15, color: 'bg-primary/15' },
-  ];
+  // Removed geometric shapes for cleaner look
 
   return (
     <section className="min-h-screen flex items-center justify-center relative overflow-hidden px-6">
@@ -103,32 +93,6 @@ export default function Hero() {
           ease: 'easeInOut',
         }}
       />
-
-      {/* Floating geometric shapes */}
-      {shapes.map((shape, index) => (
-        <motion.div
-          key={index}
-          className={`absolute ${shape.size} ${shape.color} backdrop-blur-sm`}
-          style={{
-            left: shape.x,
-            top: shape.y,
-            borderRadius: '20%',
-          }}
-          initial={{ opacity: 0, scale: 0 }}
-          animate={{
-            opacity: [0.1, 0.3, 0.1],
-            scale: [1, 1.1, 1],
-            rotate: [shape.rotate, shape.rotate + 180, shape.rotate],
-            y: [0, -20, 0],
-          }}
-          transition={{
-            duration: 6 + index,
-            repeat: Infinity,
-            delay: shape.delay,
-            ease: 'easeInOut',
-          }}
-        />
-      ))}
 
       {/* Floating animated icons */}
       {floatingIcons.map((item, index) => {
