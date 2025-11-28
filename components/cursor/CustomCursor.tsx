@@ -11,7 +11,8 @@ export default function CustomCursor() {
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
 
-  const springConfig = { damping: 25, stiffness: 700 };
+  // Much faster, more responsive springs
+  const springConfig = { damping: 30, stiffness: 400 };
   const cursorXSpring = useSpring(cursorX, springConfig);
   const cursorYSpring = useSpring(cursorY, springConfig);
 
@@ -36,8 +37,8 @@ export default function CustomCursor() {
     });
 
     const moveCursor = (e: MouseEvent) => {
-      cursorX.set(e.clientX - 16);
-      cursorY.set(e.clientY - 16);
+      cursorX.set(e.clientX);
+      cursorY.set(e.clientY);
     };
 
     const handleMouseOver = (e: MouseEvent) => {
@@ -74,44 +75,69 @@ export default function CustomCursor() {
 
   return (
     <>
-      {/* Main cursor */}
+      {/* Main cursor dot - follows precisely */}
       <motion.div
-        className="fixed top-0 left-0 w-8 h-8 pointer-events-none z-[9999] mix-blend-difference hidden md:block"
-        style={{
-          x: cursorXSpring,
-          y: cursorYSpring,
-        }}
-        animate={{
-          scale: isPointer ? 1.5 : 1,
-          opacity: isHidden ? 0 : 1,
-        }}
-        transition={{
-          scale: { duration: 0.2 },
-          opacity: { duration: 0.2 },
-        }}
-      >
-        <div className="w-full h-full rounded-full border-2 border-white" />
-      </motion.div>
-
-      {/* Dot cursor */}
-      <motion.div
-        className="fixed top-0 left-0 w-1.5 h-1.5 pointer-events-none z-[9999] hidden md:block"
+        className="fixed top-0 left-0 pointer-events-none z-[9999] hidden md:block"
         style={{
           x: cursorX,
           y: cursorY,
-          translateX: '11px',
-          translateY: '11px',
+          translateX: '-50%',
+          translateY: '-50%',
         }}
         animate={{
-          scale: isPointer ? 0 : 1,
           opacity: isHidden ? 0 : 1,
         }}
         transition={{
-          scale: { duration: 0.2 },
           opacity: { duration: 0.2 },
         }}
       >
-        <div className={`w-full h-full rounded-full transition-colors duration-300 ${isDark ? 'bg-white' : 'bg-black'}`} />
+        <motion.div
+          className={`rounded-full ${isDark ? 'bg-white' : 'bg-black'}`}
+          animate={{
+            width: isPointer ? 40 : 8,
+            height: isPointer ? 40 : 8,
+          }}
+          transition={{
+            duration: 0.2,
+            ease: 'easeOut',
+          }}
+        />
+      </motion.div>
+
+      {/* Trail dot 1 */}
+      <motion.div
+        className="fixed top-0 left-0 pointer-events-none z-[9998] hidden md:block"
+        style={{
+          x: cursorXSpring,
+          y: cursorYSpring,
+          translateX: '-50%',
+          translateY: '-50%',
+        }}
+        animate={{
+          opacity: isHidden ? 0 : 0.4,
+        }}
+      >
+        <div
+          className={`w-6 h-6 rounded-full ${isDark ? 'bg-white' : 'bg-black'}`}
+        />
+      </motion.div>
+
+      {/* Trail dot 2 */}
+      <motion.div
+        className="fixed top-0 left-0 pointer-events-none z-[9997] hidden md:block"
+        style={{
+          x: useSpring(cursorX, { damping: 35, stiffness: 300 }),
+          y: useSpring(cursorY, { damping: 35, stiffness: 300 }),
+          translateX: '-50%',
+          translateY: '-50%',
+        }}
+        animate={{
+          opacity: isHidden ? 0 : 0.2,
+        }}
+      >
+        <div
+          className={`w-4 h-4 rounded-full ${isDark ? 'bg-white' : 'bg-black'}`}
+        />
       </motion.div>
     </>
   );
